@@ -1,54 +1,68 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Result} from "./components/Result/Result";
-import {IncButton} from "./components/IncButton/IncButton";
-import {ResetButton} from "./components/ResetButton/ResetButton";
-import {Button} from "./components/Button/Button";
+import {SettingValue} from "./components/SettingValue/SettingValue";
+import {Counter} from "./components/Counter/Counter";
+
+type ValueType = {
+    [key: string]: number
+}
+
 
 function App() {
 
-    let [result, setResult] = useState<number>(0)
-    let maxValue = 5;
-    let minValue = 0;
+    const [result, setResult] = useState<number>(0)
+    const [value, setValue] = useState<ValueType>(
+        {
+            ['max']: 5,
+            ['min']: 0
+        }
+    )
 
 
-    const clickInc = () => {
-        result < maxValue ? result++ : result = maxValue;
-        setResult(result);
+    //let startMax = JSON.parse(localStorage.getItem('valueMax'))
+
+    //const valueMax = value['max'];
+    // const valueMin = value['min'];
+
+
+    const updateMaxMinValue = (valueMax: number, valueMin: number) => {
+        setValue({['max']:valueMax, ['min']:valueMin})
+
+
     }
 
-    const clickReset = () => {
-        setResult(minValue)
-    }
+    /*    let [result, setResult] = useState<number>(0)
+        let maxValue = 5;
+        let minValue = 0;
 
 
-    const onOffDisableInc = (result: number) => {
-        return result === maxValue
-    }
+        const clickInc = () => {
+            result < maxValue ? result++ : result = maxValue;
+            setResult(result);
+        }
 
-    const onOffDisableReset = (result: number) => {
-        return result === minValue
-    }
+        const clickReset = () => {
+            setResult(minValue)
+        }
+
+
+        const onOffDisableInc = (result: number) => {
+            return result === maxValue
+        }
+
+        const onOffDisableReset = (result: number) => {
+            return result === minValue
+        }*/
 
 
     return (
         <div className="App">
-            <div className="counter">
-                <div className="scoreboard">
-                    <Result total={result}/>
-                </div>
-
-                <div className="buttons">
-                    {/* <IncButton clickInc={clickInc} result={result}/>
-                <ResetButton clickReset={clickReset} result={result}/>*/}
-                    <Button clickHandler={clickInc} onOffDisable={onOffDisableInc} result={result} name="inc"
-                            className="inc-reset"/>
-                    <Button clickHandler={clickReset} onOffDisable={onOffDisableReset} result={result} name="reset"
-                            className="button-reset"/>
-                </div>
-            </div>
+            <SettingValue updateMaxMinValue={updateMaxMinValue}/>
+            <Counter valueMin={value['min']} valueMax={value['max']} result={result} setResult={setResult}/>
         </div>
     );
 }
 
 export default App;
+
+

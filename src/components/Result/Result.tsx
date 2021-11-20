@@ -3,12 +3,13 @@ import './../../App.css';
 
 type ResultPropsType = {
     total: number
+    valueMax: number
 }
 
 
-export const Result = (props: ResultPropsType) => {
+export const Result = ({valueMax, ...props}: ResultPropsType) => {
 
-    const totalClassName = `result ${props.total === 5 ? "redResult" : "defResult"}`
+    const totalClassName = `result ${props.total === valueMax ? "redResult" : "defResult"}`
 
     return (
         <div className={totalClassName}>{props.total}</div>

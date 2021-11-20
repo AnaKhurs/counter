@@ -7,19 +7,22 @@
 }
 
 .scoreboard{
-    width: 140px;
-    height: 30px;
-    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 10px;
+    border: blue solid 2px;
+    margin: 5px;
+    background-color: lightblue;
     text-align: center;
 }
 
 .result{
-    padding: 5px;
-    border: 2px solid black;
 }
 
 
 button{
+    margin: 5px;
+    border-radius: 10px;
+    border: blue solid 2px;
     min-width: 70px;
     min-height: 30px;
     padding: 8px 16px;
@@ -27,12 +30,12 @@ button{
 
 
 .button-reset{
-    background: darkcyan;
+    background: red;
 }
 
 
 .inc-reset{
-    background: plum;
+    background: dodgerblue;
 }
 
 .defResult{
@@ -48,4 +51,13 @@ button{
 button:disabled{
     opacity: 65%;
     background-color: grey;
+}
+
+.counter{
+    width: fit-content;
+    padding: 15px;
+    border-radius: 10px;
+    border: solid 2px blue;
+
+
 }

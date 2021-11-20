@@ -23,11 +23,11 @@ function App() {
 
 
     const onOffDisableInc = (result: number) => {
-        return result === maxValue ? true : false
+        return result === maxValue
     }
 
     const onOffDisableReset = (result: number) => {
-        return result === minValue ? true : false
+        return result === minValue
     }
 
 

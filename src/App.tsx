@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {SettingValue} from "./components/SettingValue/SettingValue";
 import {Counter} from "./components/Counter/Counter";
@@ -18,42 +18,26 @@ function App() {
         }
     )
 
+    useEffect(() => {
 
-    //let startMax = JSON.parse(localStorage.getItem('valueMax'))
+        const valueMin = localStorage.getItem("valueMin")
+        if (valueMin) {
+            const newValueMin = JSON.parse(valueMin)
+            setValue({...value, ['max']: newValueMin})
+        }
 
-    //const valueMax = value['max'];
-    // const valueMin = value['min'];
+        const valueMax = localStorage.getItem("valueMax")
+        if (valueMax) {
+            const newValueMax = JSON.parse(valueMax)
+            setValue({...value, ['max']: newValueMax})
+        }
+
+    }, [])
 
 
     const updateMaxMinValue = (valueMax: number, valueMin: number) => {
-        setValue({['max']:valueMax, ['min']:valueMin})
-
-
+        setValue({['max']: valueMax, ['min']: valueMin})
     }
-
-    /*    let [result, setResult] = useState<number>(0)
-        let maxValue = 5;
-        let minValue = 0;
-
-
-        const clickInc = () => {
-            result < maxValue ? result++ : result = maxValue;
-            setResult(result);
-        }
-
-        const clickReset = () => {
-            setResult(minValue)
-        }
-
-
-        const onOffDisableInc = (result: number) => {
-            return result === maxValue
-        }
-
-        const onOffDisableReset = (result: number) => {
-            return result === minValue
-        }*/
-
 
     return (
         <div className="App">

@@ -18,6 +18,7 @@
     background-color: #eaf0f9;
     text-align: center;
     font-size: 40px;
+    width: 200px;
 }
 
 .result{
@@ -40,7 +41,11 @@ button{
 }
 
 
-.inc-reset{
+.button-inc{
+    background: dodgerblue;
+}
+
+.button-set{
     background: dodgerblue;
 }
 
@@ -95,4 +100,21 @@ button:disabled{
 }
 
 .input{
+}
+
+.inputError{
+    background-color: red;
+}
+
+.warning{
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 23px;
+}
+
+.error{
+    font-size: 15px;
+    font-weight: 600;
+    padding-top: 23px;
+    color: red;
 }

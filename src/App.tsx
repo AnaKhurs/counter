@@ -10,6 +10,8 @@ type ValueType = {
 
 function App() {
 
+    const [warning, setWarning] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null)
     const [result, setResult] = useState<number>(0)
     const [value, setValue] = useState<ValueType>(
         {
@@ -23,7 +25,8 @@ function App() {
         const valueMin = localStorage.getItem("valueMin")
         if (valueMin) {
             const newValueMin = JSON.parse(valueMin)
-            setValue({...value, ['max']: newValueMin})
+            setValue({...value, ['min']: newValueMin})
+            setResult(newValueMin)
         }
 
         const valueMax = localStorage.getItem("valueMax")
@@ -37,12 +40,25 @@ function App() {
 
     const updateMaxMinValue = (valueMax: number, valueMin: number) => {
         setValue({['max']: valueMax, ['min']: valueMin})
+        setResult(valueMin)
     }
 
     return (
         <div className="App">
-            <SettingValue updateMaxMinValue={updateMaxMinValue}/>
-            <Counter valueMin={value['min']} valueMax={value['max']} result={result} setResult={setResult}/>
+            <SettingValue updateMaxMinValue={updateMaxMinValue}
+                          setWarning={setWarning}
+                          setError={setError}
+                          error={error}
+                          valueMin={value['min']}
+                          valueMax={value['max']}
+            />
+            <Counter valueMin={value['min']}
+                     valueMax={value['max']}
+                     result={result}
+                     setResult={setResult}
+                     warning={warning}
+                     error={error}
+            />
         </div>
     );
 }

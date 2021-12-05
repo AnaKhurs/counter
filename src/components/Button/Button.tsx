@@ -3,18 +3,17 @@ import './../../App.css';
 
 type IncButtonPropsType = {
     clickHandler: () => void
-    onOffDisable: (result: number) => boolean
+    onOffDisable: () => boolean
     name: string
-    result: number
+    result?: number
     className:string
+    valueMin?: number
 }
-
-
 
 export const Button = (props: IncButtonPropsType) => {
 
     return (
-        <button disabled={props.onOffDisable(props.result)} className={props.className} onClick={props.clickHandler}>{props.name}</button>
+        <button disabled={props.onOffDisable()} className={props.className} onClick={props.clickHandler}>{props.name}</button>
     );
 }
 

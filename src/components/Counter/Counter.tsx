@@ -7,11 +7,17 @@ type PropsType = {
     valueMin: number
     result: number
     setResult: (result: number) => void
+    warning: string | null
+    error: string | null
 }
 
-export const Counter = ({valueMax, valueMin,result, setResult, ...props}: PropsType) => {
+export const Counter = ({valueMax, valueMin, result, setResult, ...props}: PropsType) => {
 
-
+    let lsValueMin = valueMin;
+    const vMin = localStorage.getItem("valueMin")
+    if (vMin) {
+        lsValueMin = JSON.parse(vMin)
+    }
 
     const clickInc = () => {
         result < valueMax ? result++ : result = valueMax;
@@ -19,21 +25,34 @@ export const Counter = ({valueMax, valueMin,result, setResult, ...props}: PropsT
     }
 
     const clickReset = () => {
-        setResult(valueMin)
+        lsValueMin && setResult(lsValueMin)
+        if (lsValueMin===0){
+            setResult(0)
+        }
     }
 
-    const onOffDisableInc = (result: number) => {
-        return result === valueMax
+    const onOffDisableInc = () => {
+        return result === valueMax || !!props.warning
     }
 
-    const onOffDisableReset = (result: number) => {
-        return result === valueMin
+
+    const onOffDisableReset = () => {
+        return result === lsValueMin || !!props.warning
     }
 
     return (
         <div className="counter">
             <div className="scoreboard">
-                <Result total={result} valueMax={valueMax}/>
+
+                {
+                    props.error
+                        ? <div className="error">{props.error}</div>
+                        : props.warning
+                        ? <div className="warning">{props.warning}</div>
+                        : <Result total={result} valueMax={valueMax} valueMin={valueMin}/>
+                }
+
+
             </div>
 
             <div className="buttons">
@@ -41,7 +60,7 @@ export const Counter = ({valueMax, valueMin,result, setResult, ...props}: PropsT
                         onOffDisable={onOffDisableInc}
                         result={result}
                         name="inc"
-                        className="inc-reset"
+                        className="button-inc"
                 />
                 <Button clickHandler={clickReset}
                         onOffDisable={onOffDisableReset}

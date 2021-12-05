@@ -1,43 +1,31 @@
-import {Result} from "../Result/Result";
+import React, {Dispatch, SetStateAction} from "react";
+import {ValueType} from "../../App";
 import {Button} from "../Button/Button";
-import React, {useState} from "react";
 
 type PropsType = {
-    valueMax: number
-    valueMin: number
+    //valueMin: number
+    //valueMax: number
     result: number
-    setResult: (result: number) => void
     warning: string | null
     error: string | null
+    value: ValueType
+    setResult: (result: number) => void
 }
 
-export const Counter = ({valueMax, valueMin, result, setResult, ...props}: PropsType) => {
-
-    let lsValueMin = valueMin;
-    const vMin = localStorage.getItem("valueMin")
-    if (vMin) {
-        lsValueMin = JSON.parse(vMin)
-    }
+export const Counter = (props: PropsType) => {
 
     const clickInc = () => {
-        result < valueMax ? result++ : result = valueMax;
-        setResult(result);
+        let total = props.result < props.value["max"] ? props.result + 1 : props.value["max"];
+        props.setResult(total)
     }
-
     const clickReset = () => {
-        lsValueMin && setResult(lsValueMin)
-        if (lsValueMin===0){
-            setResult(0)
-        }
+        props.setResult(props.value["min"])
     }
-
     const onOffDisableInc = () => {
-        return result === valueMax || !!props.warning
+        return props.result === props.value["max"] || !!props.warning || !!props.error
     }
-
-
     const onOffDisableReset = () => {
-        return result === lsValueMin || !!props.warning
+        return props.result === props.value["min"] || !!props.warning || !!props.error
     }
 
     return (
@@ -49,25 +37,16 @@ export const Counter = ({valueMax, valueMin, result, setResult, ...props}: Props
                         ? <div className="error">{props.error}</div>
                         : props.warning
                         ? <div className="warning">{props.warning}</div>
-                        : <Result total={result} valueMax={valueMax} valueMin={valueMin}/>
+                        : <div className={"totalClassName"}>{props.result}</div>
                 }
 
 
             </div>
 
             <div className="buttons">
-                <Button clickHandler={clickInc}
-                        onOffDisable={onOffDisableInc}
-                        result={result}
-                        name="inc"
-                        className="button-inc"
-                />
-                <Button clickHandler={clickReset}
-                        onOffDisable={onOffDisableReset}
-                        result={result}
-                        name="reset"
-                        className="button-reset"
-                />
+                <Button clickHandler={clickInc} onOffDisable={onOffDisableInc} name="inc" className="button-inc"/>
+                <Button clickHandler={clickReset} onOffDisable={onOffDisableReset} name="reset"
+                        className="button-reset"/>
             </div>
         </div>
 

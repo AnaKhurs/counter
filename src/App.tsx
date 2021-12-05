@@ -3,16 +3,17 @@ import './App.css';
 import {SettingValue} from "./components/SettingValue/SettingValue";
 import {Counter} from "./components/Counter/Counter";
 
-type ValueType = {
+export type ValueType = {
     [key: string]: number
 }
-
 
 function App() {
 
     const [warning, setWarning] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [result, setResult] = useState<number>(0)
+    const [valueMax, setValueMax] = useState<number>(5)
+    const [valueMin, setValueMin] = useState<number>(0)
     const [value, setValue] = useState<ValueType>(
         {
             ['max']: 5,
@@ -22,40 +23,34 @@ function App() {
 
     useEffect(() => {
 
-        const valueMin = localStorage.getItem("valueMin")
-        if (valueMin) {
-            const newValueMin = JSON.parse(valueMin)
-            setValue({...value, ['min']: newValueMin})
-            setResult(newValueMin)
-        }
-
         const valueMax = localStorage.getItem("valueMax")
-        if (valueMax) {
+        const valueMin = localStorage.getItem("valueMin")
+        if (valueMin && valueMax) {
+            const newValueMin = JSON.parse(valueMin)
             const newValueMax = JSON.parse(valueMax)
-            setValue({...value, ['max']: newValueMax})
+            setValue({...value, ['max']: newValueMax, ['min']: newValueMin})
+            setResult(newValueMin)
+            setValueMin(newValueMin)
+            setValueMax(newValueMax)
         }
-
     }, [])
-
-
-    const updateMaxMinValue = (valueMax: number, valueMin: number) => {
-        setValue({['max']: valueMax, ['min']: valueMin})
-        setResult(valueMin)
-    }
 
     return (
         <div className="App">
-            <SettingValue updateMaxMinValue={updateMaxMinValue}
+            <SettingValue valueMin={valueMin}
+                          valueMax={valueMax}
+                          setValueMax={setValueMax}
+                          setValueMin={setValueMin}
+                          setResult={setResult}
+                          value={value}
+                          setValue={setValue}
+                          error={error}
                           setWarning={setWarning}
                           setError={setError}
-                          error={error}
-                          valueMin={value['min']}
-                          valueMax={value['max']}
             />
-            <Counter valueMin={value['min']}
-                     valueMax={value['max']}
-                     result={result}
+            <Counter value={value}
                      setResult={setResult}
+                     result={result}
                      warning={warning}
                      error={error}
             />

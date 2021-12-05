@@ -1,79 +1,64 @@
-import React, {ChangeEvent, Dispatch, SetStateAction, useEffect, useState} from "react";
+import React, {ChangeEvent, Dispatch, SetStateAction} from "react";
+import {ValueType} from "../../App";
 import {Button} from "../Button/Button";
-import {Counter} from "../Counter/Counter";
 
 type PropsType = {
-    updateMaxMinValue: (valueMax: number, valueMin: number) => void
-    setWarning: Dispatch<SetStateAction<string | null>>
-    setError: Dispatch<SetStateAction<string | null>>
-    error: string | null
     valueMin: number
     valueMax: number
+    setValueMax: (valueMax: number) => void
+    setValueMin: (valueMin: number) => void
+    setResult: (result: number) => void
+    value: ValueType
+    setValue: Dispatch<SetStateAction<ValueType>>
+    error: string | null
+    setWarning: Dispatch<SetStateAction<string | null>>
+    setError: Dispatch<SetStateAction<string | null>>
 }
 
 export const SettingValue = (props: PropsType) => {
 
-    const [inputValueMax, setInputValueMax] = useState(5)
-    const [inputValueMin, setInputValueMin] = useState(0)
+    const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
+        const newValueMax = Number(e.currentTarget.value)
+        props.setValueMax(newValueMax)
 
-    useEffect(() => {
-        let newValueMin = localStorage.getItem("valueMin")
-        if (newValueMin) {
-            setInputValueMin(JSON.parse(newValueMin))
-        }
-    }, [inputValueMin])
-
-    useEffect(() => {
-        let newValueMax = localStorage.getItem("valueMax")
-        if (newValueMax) {
-            setInputValueMax(JSON.parse(newValueMax))
-        }
-    }, [inputValueMax])
-
-    const changeMaxValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const newMaxValue = Number(e.currentTarget.value)
-        setInputValueMax(newMaxValue)
-        localStorage.setItem("valueMax", JSON.stringify(newMaxValue))
-        props.setWarning("enter values and press set")
-        if (newMaxValue <= inputValueMin) {
-            props.setError("Incorrect value!")
-        }
-        if (newMaxValue > inputValueMin) {
+        if (newValueMax > props.valueMin) {
             props.setWarning("enter values and press set")
         }
-        if (newMaxValue > inputValueMin && inputValueMin > 0) {
-            props.setError(null)
-        }
-
-    }
-
-    const changeMinValue = (e: ChangeEvent<HTMLInputElement>) => {
-        const newMinValue = Number(e.currentTarget.value)
-        setInputValueMin(newMinValue)
-        localStorage.setItem("valueMin", JSON.stringify(newMinValue))
-        if (newMinValue < 0 || newMinValue === inputValueMax) {
+        if (newValueMax <= props.valueMin) {
             props.setError("Incorrect value!")
         }
-        if (newMinValue >= 0) {
-            props.setWarning("enter values and press set")
-        }
-        if (newMinValue >= 0 && inputValueMax > newMinValue) {
+        if (newValueMax > props.valueMin && props.valueMin >= 0) {
             props.setError(null)
         }
     }
+
+    const changeValueMin = (e: ChangeEvent<HTMLInputElement>) => {
+        const newValueMin = Number(e.currentTarget.value)
+        props.setValueMin(newValueMin)
+
+        if (newValueMin >= 0) {
+            props.setWarning("enter values and press set")
+        }
+        if (newValueMin < 0 || newValueMin === props.valueMax) {
+            props.setError("Incorrect value!")
+        }
+        if (newValueMin >= 0 && props.valueMax > newValueMin) {
+            props.setError(null)
+        }
+    }
+
 
     const onClickSetHandler = () => {
-        props.updateMaxMinValue(inputValueMax, inputValueMin)
-        props.setWarning(null)
+        props.setValue({['max']: props.valueMax, ['min']: props.valueMin})
+        props.setResult(props.valueMin)
+        localStorage.setItem("valueMin", JSON.stringify(props.valueMin))
+        localStorage.setItem("valueMax", JSON.stringify(props.valueMax))
     }
-
-    const resultClassNameInputMaxValue = inputValueMax <= inputValueMin || inputValueMax <= 0 ? "inputError" : "input"
-    const resultClassNameInputMinValue = inputValueMin < 0 ? "inputError" : "input"
 
     const onOffDisableSet = () => {
         return (
             !!props.error ||
-            inputValueMax === props.valueMax && inputValueMin === props.valueMin
+            props.valueMax === props.value['max'] && props.valueMin === props.value['min']
         )
     }
 
@@ -83,20 +68,25 @@ export const SettingValue = (props: PropsType) => {
             <div className="values">
                 <div className="value">
                     <div className="divValue">max value:</div>
-                    <input type={"number"} className={resultClassNameInputMaxValue} value={inputValueMax}
-                           onChange={changeMaxValue}/>
+                    <input type={"number"}
+                           className={'gff'}
+                           value={props.valueMax}
+                           onChange={changeValueMax}/>
                 </div>
                 <div className="value">
                     <div className="divValue">min value:</div>
-                    <input type={"number"} className={resultClassNameInputMinValue} value={inputValueMin}
-                           onChange={changeMinValue}/>
+                    <input type={"number"}
+                           className={'gff'}
+                           value={props.valueMin}
+                           onChange={changeValueMin}/>
                 </div>
             </div>
             <div>
                 <Button clickHandler={onClickSetHandler}
                         onOffDisable={onOffDisableSet}
-                        name={"set"}
-                        className="button-set"/>
+                        name="set"
+                        className="button-set"
+                />
             </div>
         </div>
     )

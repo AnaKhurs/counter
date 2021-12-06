@@ -1,15 +1,15 @@
-.App{
+.App {
     padding: 50px;
     display: flex;
 }
 
 
-.buttons{
+.buttons {
     margin: 0 auto;
     text-align: center;
 }
 
-.scoreboard{
+.scoreboard {
     height: 67px;
     padding: 10px;
     border-radius: 10px;
@@ -21,7 +21,7 @@
     width: 200px;
 }
 
-.values{
+.values {
     background-color: #eaf0f9;
     height: 67px;
     margin: 5px auto;
@@ -31,52 +31,53 @@
     border: solid 2px blue;
 }
 
-.result{
+.result {
 
 }
 
 
-button{
+button {
     margin: 5px;
     border-radius: 10px;
     border: blue solid 2px;
     min-width: 70px;
     min-height: 30px;
     padding: 8px 16px;
+    font-weight: 600;
 }
 
 
-.button-reset{
+.button-reset {
     background: red;
 }
 
 
-.button-inc{
+.button-inc {
     background: dodgerblue;
 }
 
-.button-set{
+.button-set {
     background: dodgerblue;
 }
 
-.defResult{
+.defResult {
     color: black;
     margin-top: 10px;
 }
 
 
-.redResult{
+.redResult {
     color: red;
     font-weight: bold;
     margin-top: 10px;
 }
 
-button:disabled{
+button:disabled {
     opacity: 65%;
     background-color: grey;
 }
 
-.counter{
+.counter {
     margin: 5px;
     width: fit-content;
     padding: 15px;
@@ -85,7 +86,7 @@ button:disabled{
     background-color: whitesmoke;
 }
 
-.settingValue{
+.settingValue {
     margin: 5px;
     width: fit-content;
     padding: 15px;
@@ -95,30 +96,30 @@ button:disabled{
 }
 
 
-
-.divValue{
- width: 100px;
+.divValue {
+    width: 100px;
 
 }
-.value{
+
+.value {
     display: flex;
     margin: 5px;
 }
 
-.input{
+.input {
 }
 
-.inputError{
+.inputError {
     background-color: red;
 }
 
-.warning{
+.warning {
     font-size: 15px;
     font-weight: 600;
     padding-top: 23px;
 }
 
-.error{
+.error {
     font-size: 15px;
     font-weight: 600;
     padding-top: 23px;

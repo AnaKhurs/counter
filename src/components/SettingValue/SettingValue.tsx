@@ -29,6 +29,7 @@ export const SettingValue = ({
                                  ...props
                              }: PropsType) => {
 
+
     const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMax = Number(e.currentTarget.value)
         setValueMax(newValueMax)
@@ -42,7 +43,11 @@ export const SettingValue = ({
         if (newValueMax > valueMin && valueMin >= 0) {
             setError(null)
         }
+        if (newValueMax === value['max'] && valueMin === value['min']) {
+            setWarning(null)
+        }
     }
+
 
     const changeValueMin = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMin = Number(e.currentTarget.value)
@@ -56,6 +61,9 @@ export const SettingValue = ({
         }
         if (newValueMin >= 0 && valueMax > newValueMin) {
             setError(null)
+        }
+        if (newValueMin === value['min'] && valueMax === value['max']) {
+            setWarning(null)
         }
     }
 

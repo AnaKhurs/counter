@@ -97,7 +97,7 @@ export const SettingValue = ({
                            onChange={changeValueMin}/>
                 </div>
             </div>
-            <div>
+            <div className="buttons">
                 <Button clickHandler={onClickSetHandler}
                         onOffDisable={onOffDisableSet}
                         name="set"

@@ -1,11 +1,12 @@
 .App{
-    padding-top: 100px;
+    padding: 50px;
     display: flex;
 }
 
 
 .buttons{
-    margin: auto;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .scoreboard{
@@ -13,12 +14,21 @@
     padding: 10px;
     border-radius: 10px;
     border: blue solid 2px;
-/*    margin: 5px;*/
     margin: 5px auto;
     background-color: #eaf0f9;
     text-align: center;
     font-size: 40px;
     width: 200px;
+}
+
+.values{
+    background-color: #eaf0f9;
+    height: 67px;
+    margin: 5px auto;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
+    border: solid 2px blue;
 }
 
 .result{
@@ -72,6 +82,7 @@ button:disabled{
     padding: 15px;
     border-radius: 10px;
     border: solid 2px blue;
+    background-color: whitesmoke;
 }
 
 .settingValue{
@@ -80,15 +91,10 @@ button:disabled{
     padding: 15px;
     border-radius: 10px;
     border: solid 2px blue;
+    background-color: whitesmoke;
 }
 
-.values{
-    margin: 5px;
-    width: fit-content;
-    padding: 15px;
-    border-radius: 10px;
-    border: solid 2px blue;
-}
+
 
 .divValue{
  width: 100px;

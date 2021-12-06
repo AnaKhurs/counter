@@ -51,6 +51,7 @@ export const SettingValue = (props: PropsType) => {
     const onClickSetHandler = () => {
         props.setValue({['max']: props.valueMax, ['min']: props.valueMin})
         props.setResult(props.valueMin)
+        props.setWarning(null)
         localStorage.setItem("valueMin", JSON.stringify(props.valueMin))
         localStorage.setItem("valueMax", JSON.stringify(props.valueMax))
     }
@@ -62,6 +63,8 @@ export const SettingValue = (props: PropsType) => {
         )
     }
 
+    const resultClassNameInputMaxValue = props.valueMax <= props.valueMin || props.valueMax <= 0 ? "inputError" : "input"
+    const resultClassNameInputMinValue = props.valueMin < 0 ? "inputError" : "input"
 
     return (
         <div className="settingValue">
@@ -69,14 +72,15 @@ export const SettingValue = (props: PropsType) => {
                 <div className="value">
                     <div className="divValue">max value:</div>
                     <input type={"number"}
-                           className={'gff'}
+                           className={resultClassNameInputMaxValue}
                            value={props.valueMax}
-                           onChange={changeValueMax}/>
+                           onChange={changeValueMax}
+                    />
                 </div>
                 <div className="value">
                     <div className="divValue">min value:</div>
                     <input type={"number"}
-                           className={'gff'}
+                           className={resultClassNameInputMinValue}
                            value={props.valueMin}
                            onChange={changeValueMin}/>
                 </div>

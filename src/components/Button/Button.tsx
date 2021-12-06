@@ -5,13 +5,20 @@ type IncButtonPropsType = {
     clickHandler: () => void
     onOffDisable: () => boolean
     name: string
-    className:string
+    className: string
 }
 
-export const Button = (props: IncButtonPropsType) => {
+export const Button = ({
+                           clickHandler,
+                           onOffDisable,
+                           name,
+                           className,
+                           ...props
+                       }: IncButtonPropsType) => {
 
     return (
-        <button disabled={props.onOffDisable()} className={props.className} onClick={props.clickHandler}>{props.name}</button>
+        <button disabled={onOffDisable()} className={className}
+                onClick={clickHandler}>{name}</button>
     );
 }
 

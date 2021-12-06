@@ -1,10 +1,8 @@
-import React, {Dispatch, SetStateAction} from "react";
+import React from "react";
 import {ValueType} from "../../App";
 import {Button} from "../Button/Button";
 
 type PropsType = {
-    //valueMin: number
-    //valueMax: number
     result: number
     warning: string | null
     error: string | null
@@ -12,32 +10,41 @@ type PropsType = {
     setResult: (result: number) => void
 }
 
-export const Counter = (props: PropsType) => {
+export const Counter = ({
+                            result,
+                            warning,
+                            error,
+                            value,
+                            setResult,
+                            ...props
+                        }: PropsType) => {
 
     const clickInc = () => {
-        let total = props.result < props.value["max"] ? props.result + 1 : props.value["max"];
-        props.setResult(total)
+        let total = result < value["max"] ? result + 1 : value["max"];
+        setResult(total)
     }
     const clickReset = () => {
-        props.setResult(props.value["min"])
+        setResult(value["min"])
     }
     const onOffDisableInc = () => {
-        return props.result === props.value["max"] || !!props.warning || !!props.error
+        return result === value["max"] || !!warning || !!error
     }
     const onOffDisableReset = () => {
-        return props.result === props.value["min"] || !!props.warning || !!props.error
+        return result === value["min"] || !!warning || !!error
     }
+
+    const totalClassName = `result ${result === value["max"] ? "redResult" : "defResult"}`
 
     return (
         <div className="counter">
             <div className="scoreboard">
 
                 {
-                    props.error
-                        ? <div className="error">{props.error}</div>
-                        : props.warning
-                        ? <div className="warning">{props.warning}</div>
-                        : <div className={"totalClassName"}>{props.result}</div>
+                    error
+                        ? <div className="error">{error}</div>
+                        : warning
+                        ? <div className="warning">{warning}</div>
+                        : <div className={totalClassName}>{result}</div>
                 }
 
 

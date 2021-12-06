@@ -22,7 +22,6 @@ function App() {
     )
 
     useEffect(() => {
-
         const valueMax = localStorage.getItem("valueMax")
         const valueMin = localStorage.getItem("valueMin")
         if (valueMin && valueMax) {

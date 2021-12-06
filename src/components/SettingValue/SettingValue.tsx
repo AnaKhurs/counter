@@ -15,56 +15,68 @@ type PropsType = {
     setError: Dispatch<SetStateAction<string | null>>
 }
 
-export const SettingValue = (props: PropsType) => {
+export const SettingValue = ({
+                                 valueMin,
+                                 valueMax,
+                                 setValueMax,
+                                 setValueMin,
+                                 setResult,
+                                 value,
+                                 setValue,
+                                 error,
+                                 setWarning,
+                                 setError,
+                                 ...props
+                             }: PropsType) => {
 
     const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMax = Number(e.currentTarget.value)
-        props.setValueMax(newValueMax)
+        setValueMax(newValueMax)
 
-        if (newValueMax > props.valueMin) {
-            props.setWarning("enter values and press set")
+        if (newValueMax > valueMin) {
+            setWarning("enter values and press set")
         }
-        if (newValueMax <= props.valueMin) {
-            props.setError("Incorrect value!")
+        if (newValueMax <= valueMin) {
+            setError("Incorrect value!")
         }
-        if (newValueMax > props.valueMin && props.valueMin >= 0) {
-            props.setError(null)
+        if (newValueMax > valueMin && valueMin >= 0) {
+            setError(null)
         }
     }
 
     const changeValueMin = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMin = Number(e.currentTarget.value)
-        props.setValueMin(newValueMin)
+        setValueMin(newValueMin)
 
         if (newValueMin >= 0) {
-            props.setWarning("enter values and press set")
+            setWarning("enter values and press set")
         }
-        if (newValueMin < 0 || newValueMin === props.valueMax) {
-            props.setError("Incorrect value!")
+        if (newValueMin < 0 || newValueMin === valueMax) {
+            setError("Incorrect value!")
         }
-        if (newValueMin >= 0 && props.valueMax > newValueMin) {
-            props.setError(null)
+        if (newValueMin >= 0 && valueMax > newValueMin) {
+            setError(null)
         }
     }
 
 
     const onClickSetHandler = () => {
-        props.setValue({['max']: props.valueMax, ['min']: props.valueMin})
-        props.setResult(props.valueMin)
-        props.setWarning(null)
-        localStorage.setItem("valueMin", JSON.stringify(props.valueMin))
-        localStorage.setItem("valueMax", JSON.stringify(props.valueMax))
+        setValue({['max']: valueMax, ['min']: valueMin})
+        setResult(valueMin)
+        setWarning(null)
+        localStorage.setItem("valueMin", JSON.stringify(valueMin))
+        localStorage.setItem("valueMax", JSON.stringify(valueMax))
     }
 
     const onOffDisableSet = () => {
         return (
-            !!props.error ||
-            props.valueMax === props.value['max'] && props.valueMin === props.value['min']
+            !!error ||
+            valueMax === value['max'] && valueMin === value['min']
         )
     }
 
-    const resultClassNameInputMaxValue = props.valueMax <= props.valueMin || props.valueMax <= 0 ? "inputError" : "input"
-    const resultClassNameInputMinValue = props.valueMin < 0 ? "inputError" : "input"
+    const resultClassNameInputMaxValue = valueMax <= valueMin || valueMax <= 0 ? "inputError" : "input"
+    const resultClassNameInputMinValue = valueMin < 0 ? "inputError" : "input"
 
     return (
         <div className="settingValue">
@@ -73,7 +85,7 @@ export const SettingValue = (props: PropsType) => {
                     <div className="divValue">max value:</div>
                     <input type={"number"}
                            className={resultClassNameInputMaxValue}
-                           value={props.valueMax}
+                           value={valueMax}
                            onChange={changeValueMax}
                     />
                 </div>
@@ -81,7 +93,7 @@ export const SettingValue = (props: PropsType) => {
                     <div className="divValue">min value:</div>
                     <input type={"number"}
                            className={resultClassNameInputMinValue}
-                           value={props.valueMin}
+                           value={valueMin}
                            onChange={changeValueMin}/>
                 </div>
             </div>

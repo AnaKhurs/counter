@@ -35,11 +35,22 @@ export const Counter = ({
 
     const totalClassName = `result ${result === value["max"] ? "redResult" : "defResult"}`
 
+    const renderScoreBoard = () => {
+        return (
+            error
+                        ? <div className="error">{error}</div>
+                        : warning
+                        ? <div className="warning">{warning}</div>
+                        : <div className={totalClassName}>{result}</div>
+        )
+    }
+
     return (
         <div className="counter">
             <div className="scoreboard">
 
                 {
+                    //  DYBVFYB 
                     error
                         ? <div className="error">{error}</div>
                         : warning

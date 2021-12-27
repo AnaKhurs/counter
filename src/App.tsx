@@ -9,11 +9,11 @@ export type ValueType = {
 
 function App() {
 
-    const [warning, setWarning] = useState<string | null>(null)
+    const [message, setMessage] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [result, setResult] = useState<number>(0)
-    const [valueMax, setValueMax] = useState<number>(5)
-    const [valueMin, setValueMin] = useState<number>(0)
+    const [valueMaxOfSettings, setValueMaxOfSettings] = useState<number>(5)
+    const [valueMinOfSettings, setValueMinOfSettings] = useState<number>(0)
     const [value, setValue] = useState<ValueType>(
         {
             ['max']: 5,
@@ -22,35 +22,35 @@ function App() {
     )
 
     useEffect(() => {
-        const valueMax = localStorage.getItem("valueMax")
-        const valueMin = localStorage.getItem("valueMin")
+        const valueMax = localStorage.getItem("valueMaxOfSettings")
+        const valueMin = localStorage.getItem("valueMinOfSettings")
         if (valueMin && valueMax) {
             const newValueMin = JSON.parse(valueMin)
             const newValueMax = JSON.parse(valueMax)
             setValue({...value, ['max']: newValueMax, ['min']: newValueMin})
             setResult(newValueMin)
-            setValueMin(newValueMin)
-            setValueMax(newValueMax)
+            setValueMinOfSettings(newValueMin)
+            setValueMaxOfSettings(newValueMax)
         }
     }, [])
 
     return (
         <div className="App">
-            <SettingValue valueMin={valueMin}
-                          valueMax={valueMax}
-                          setValueMax={setValueMax}
-                          setValueMin={setValueMin}
+            <SettingValue valueMin={valueMinOfSettings}
+                          valueMax={valueMaxOfSettings}
+                          setValueMax={setValueMaxOfSettings}
+                          setValueMin={setValueMinOfSettings}
                           setResult={setResult}
                           value={value}
                           setValue={setValue}
                           error={error}
-                          setWarning={setWarning}
+                          setWarning={setMessage}
                           setError={setError}
             />
             <Counter value={value}
                      setResult={setResult}
                      result={result}
-                     warning={warning}
+                     warning={message}
                      error={error}
             />
         </div>

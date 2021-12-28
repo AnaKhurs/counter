@@ -15,7 +15,7 @@ export const Counter = ({
                             warning,
                             error,
                             value,
-                            setResult,
+
                             ...props
                         }: PropsType) => {
 

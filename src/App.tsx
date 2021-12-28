@@ -11,7 +11,7 @@ function App() {
 
     const [message, setMessage] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
-    const [result, setResult] = useState<number>(0)
+/*    const [result, setResult] = useState<number>(0)*/
     const [valueMaxOfSettings, setValueMaxOfSettings] = useState<number>(5)
     const [valueMinOfSettings, setValueMinOfSettings] = useState<number>(0)
     const [value, setValue] = useState<ValueType>(
@@ -38,8 +38,8 @@ function App() {
         <div className="App">
             <SettingValue valueMin={valueMinOfSettings}
                           valueMax={valueMaxOfSettings}
-                          setValueMax={setValueMaxOfSettings}
-                          setValueMin={setValueMinOfSettings}
+                          setValueMaxOfSettings={setValueMaxOfSettings}
+                          setValueMinOfSettings={setValueMinOfSettings}
                           setResult={setResult}
                           value={value}
                           setValue={setValue}

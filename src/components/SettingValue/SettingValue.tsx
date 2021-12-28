@@ -5,8 +5,8 @@ import {Button} from "../Button/Button";
 type PropsType = {
     valueMin: number
     valueMax: number
-    setValueMax: (valueMax: number) => void
-    setValueMin: (valueMin: number) => void
+    setValueMaxOfSettings: (valueMax: number) => void
+    setValueMinOfSettings: (valueMin: number) => void
     setResult: (result: number) => void
     value: ValueType
     setValue: Dispatch<SetStateAction<ValueType>>
@@ -18,8 +18,8 @@ type PropsType = {
 export const SettingValue = ({
                                  valueMin,
                                  valueMax,
-                                 setValueMax,
-                                 setValueMin,
+                                 setValueMaxOfSettings,
+                                 setValueMinOfSettings,
                                  setResult,
                                  value,
                                  setValue,
@@ -32,7 +32,7 @@ export const SettingValue = ({
 
     const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMax = Number(e.currentTarget.value)
-        setValueMax(newValueMax)
+        setValueMaxOfSettings(newValueMax)
 
         if (newValueMax > valueMin) {
             setWarning("enter values and press set")
@@ -51,7 +51,7 @@ export const SettingValue = ({
 
     const changeValueMin = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMin = Number(e.currentTarget.value)
-        setValueMin(newValueMin)
+        setValueMinOfSettings(newValueMin)
 
         if (newValueMin >= 0) {
             setWarning("enter values and press set")

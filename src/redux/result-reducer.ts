@@ -20,7 +20,6 @@ type clickResetAT = {
     type: "CLICK-RESET"
 }
 
-
 export type ActionType = clickIncAT | clickResetAT
 
 

@@ -1,6 +1,6 @@
 const initialState = 0
 
-export const resultReducer =
+export const counterReducer =
     (state = initialState, action: ActionType): number => {
         switch (action.type) {
             case "CLICK-INC":
@@ -34,3 +34,8 @@ export const clickResetAC = (): clickResetAT => {
         type: "CLICK-RESET"
     }
 }
+
+
+
+
+

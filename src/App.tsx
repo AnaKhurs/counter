@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {SettingValue} from "./components/SettingValue/SettingValue";
 import {Counter} from "./components/Counter/Counter";
+import {useDispatch} from "react-redux";
 
 export type ValueType = {
     [key: string]: number
@@ -9,17 +10,19 @@ export type ValueType = {
 
 function App() {
 
-    const [message, setMessage] = useState<string | null>(null)
-    const [error, setError] = useState<string | null>(null)
-/*    const [result, setResult] = useState<number>(0)*/
-    const [valueMaxOfSettings, setValueMaxOfSettings] = useState<number>(5)
-    const [valueMinOfSettings, setValueMinOfSettings] = useState<number>(0)
-    const [value, setValue] = useState<ValueType>(
-        {
-            ['max']: 5,
-            ['min']: 0
-        }
-    )
+    /*    const [messageCounter, setMessageCounter] = useState<string | null>(null)
+        const [error, setError] = useState<string | null>(null)
+        const [result, setResult] = useState<number>(0)
+        const [valueMaxOfSettings, setValueMaxOfSettings] = useState<number>(5)
+        const [valueMinOfSettings, setValueMinOfSettings] = useState<number>(0)
+        const [value, setValue] = useState<ValueType>(
+            {
+                ['max']: 5,
+                ['min']: 0
+            }
+        )*/
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const valueMax = localStorage.getItem("valueMaxOfSettings")
@@ -36,23 +39,8 @@ function App() {
 
     return (
         <div className="App">
-            <SettingValue valueMin={valueMinOfSettings}
-                          valueMax={valueMaxOfSettings}
-                          setValueMaxOfSettings={setValueMaxOfSettings}
-                          setValueMinOfSettings={setValueMinOfSettings}
-                          setResult={setResult}
-                          value={value}
-                          setValue={setValue}
-                          error={error}
-                          setWarning={setMessage}
-                          setError={setError}
-            />
-            <Counter value={value}
-                     setResult={setResult}
-                     result={result}
-                     warning={message}
-                     error={error}
-            />
+            <SettingValue/>
+            <Counter/>
         </div>
     );
 }

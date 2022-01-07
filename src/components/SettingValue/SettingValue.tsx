@@ -1,90 +1,79 @@
-import React, {ChangeEvent, Dispatch, SetStateAction} from "react";
-import {ValueType} from "../../App";
+import React, {ChangeEvent, Dispatch} from "react";
 import {Button} from "../Button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    ActionType,
+    setErrorAC,
+    setMessageCounterAC, setResultAC, setValueAC,
+    setValueMaxOfSettingsAC,
+    setValueMinOfSettingsAC
+} from "../../redux/counter-reducer";
+import {AppRootStateType} from "../../redux/store";
 
-type PropsType = {
-    valueMin: number
-    valueMax: number
-    setValueMaxOfSettings: (valueMax: number) => void
-    setValueMinOfSettings: (valueMin: number) => void
-    setResult: (result: number) => void
-    value: ValueType
-    setValue: Dispatch<SetStateAction<ValueType>>
-    error: string | null
-    setWarning: Dispatch<SetStateAction<string | null>>
-    setError: Dispatch<SetStateAction<string | null>>
-}
+export const SettingValue = () => {
 
-export const SettingValue = ({
-                                 valueMin,
-                                 valueMax,
-                                 setValueMaxOfSettings,
-                                 setValueMinOfSettings,
-                                 setResult,
-                                 value,
-                                 setValue,
-                                 error,
-                                 setWarning,
-                                 setError,
-                                 ...props
-                             }: PropsType) => {
+    const dispatch = useDispatch<Dispatch<ActionType>>()
 
+    const {
+        valueMinOfSettings,
+        valueMaxOfSettings,
+        values,
+        error
+    } = useSelector<AppRootStateType>(state => state.counter)
 
     const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMax = Number(e.currentTarget.value)
-        setValueMaxOfSettings(newValueMax)
+        dispatch(setValueMaxOfSettingsAC(newValueMax))
 
-        if (newValueMax > valueMin) {
-            setWarning("enter values and press set")
+        if (newValueMax > valueMinOfSettings) {
+            dispatch(setMessageCounterAC("enter values and press set"))
         }
-        if (newValueMax <= valueMin) {
-            setError("Incorrect value!")
+        if (newValueMax <= valueMinOfSettings) {
+            dispatch(setErrorAC("Incorrect value!"))
         }
-        if (newValueMax > valueMin && valueMin >= 0) {
-            setError(null)
+        if (newValueMax > valueMinOfSettings && valueMinOfSettings >= 0) {
+            dispatch(setErrorAC(null))
         }
-        if (newValueMax === value['max'] && valueMin === value['min']) {
-            setWarning(null)
+        if (newValueMax === values.max && valueMinOfSettings === values.min) {
+            dispatch(setMessageCounterAC(null))
         }
     }
-
 
     const changeValueMin = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMin = Number(e.currentTarget.value)
-        setValueMinOfSettings(newValueMin)
+        dispatch(setValueMinOfSettingsAC(newValueMin))
 
         if (newValueMin >= 0) {
-            setWarning("enter values and press set")
+            dispatch(setMessageCounterAC("enter values and press set"))
         }
-        if (newValueMin < 0 || newValueMin === valueMax) {
-            setError("Incorrect value!")
+        if (newValueMin < 0 || newValueMin === valueMaxOfSettings) {
+            dispatch(setErrorAC("Incorrect value!"))
         }
-        if (newValueMin >= 0 && valueMax > newValueMin) {
-            setError(null)
+        if (newValueMin >= 0 && valueMaxOfSettings > newValueMin) {
+            dispatch(setErrorAC(null))
         }
-        if (newValueMin === value['min'] && valueMax === value['max']) {
-            setWarning(null)
+        if (newValueMin === values.min && valueMaxOfSettings === values.max) {
+            dispatch(setMessageCounterAC(null))
         }
     }
 
-
     const onClickSetHandler = () => {
-        setValue({['max']: valueMax, ['min']: valueMin})
-        setResult(valueMin)
-        setWarning(null)
-        localStorage.setItem("valueMin", JSON.stringify(valueMin))
-        localStorage.setItem("valueMax", JSON.stringify(valueMax))
+        dispatch(setValueAC({max: valueMaxOfSettings, min: valueMinOfSettings}))
+        dispatch(setResultAC(valueMinOfSettings))
+        dispatch(setMessageCounterAC(null))
+        localStorage.setItem("valueMin", JSON.stringify(valueMinOfSettings))
+        localStorage.setItem("valueMax", JSON.stringify(valueMaxOfSettings))
     }
 
     const onOffDisableSet = () => {
         return (
             !!error ||
-            valueMax === value['max'] && valueMin === value['min']
+            valueMaxOfSettings === values.max && valueMinOfSettings === values.min
         )
     }
 
-    const resultClassNameInputMaxValue = valueMax <= valueMin || valueMax <= 0 ? "inputError" : "input"
-    const resultClassNameInputMinValue = valueMin < 0 ? "inputError" : "input"
+    const resultClassNameInputMaxValue = valueMaxOfSettings <= valueMinOfSettings || valueMaxOfSettings <= 0 ? "inputError" : "input"
+    const resultClassNameInputMinValue = valueMinOfSettings < 0 ? "inputError" : "input"
 
     return (
         <div className="settingValue">
@@ -93,7 +82,7 @@ export const SettingValue = ({
                     <div className="divValue">max value:</div>
                     <input type={"number"}
                            className={resultClassNameInputMaxValue}
-                           value={valueMax}
+                           value={valueMaxOfSettings}
                            onChange={changeValueMax}
                     />
                 </div>
@@ -101,7 +90,7 @@ export const SettingValue = ({
                     <div className="divValue">min value:</div>
                     <input type={"number"}
                            className={resultClassNameInputMinValue}
-                           value={valueMin}
+                           value={valueMinOfSettings}
                            onChange={changeValueMin}/>
                 </div>
             </div>

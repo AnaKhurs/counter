@@ -1,46 +1,42 @@
 import React from "react";
-import {ValueType} from "../../App";
 import {Button} from "../Button/Button";
+import {useDispatch, useSelector} from "react-redux";
+import {ActionType, setResultAC, ValuesType} from "../../redux/counter-reducer";
+import {Dispatch} from "redux";
+import {AppRootStateType} from "../../redux/store";
 
-type PropsType = {
-    result: number
-    warning: string | null
-    error: string | null
-    value: ValueType
-    setResult: (result: number) => void
-}
+export const Counter = () => {
 
-export const Counter = ({
-                            result,
-                            warning,
-                            error,
-                            value,
-
-                            ...props
-                        }: PropsType) => {
+   const dispatch = useDispatch<Dispatch<ActionType>>()
+   const {
+       values,
+       result,
+       messageCounter,
+       error
+   } = useSelector<AppRootStateType>(state => state.counter)
 
     const clickInc = () => {
-        let total = result < value["max"] ? result + 1 : value["max"];
-        setResult(total)
+        let total = result < values.max ? result + 1 : values.max;
+        dispatch(setResultAC(total))
     }
     const clickReset = () => {
-        setResult(value["min"])
+        dispatch(setResultAC(values.min))
     }
     const onOffDisableInc = () => {
-        return result === value["max"] || !!warning || !!error
+        return result === values.max || !!messageCounter || !!error
     }
     const onOffDisableReset = () => {
-        return result === value["min"] || !!warning || !!error
+        return result === values.min || !!messageCounter || !!error
     }
 
-    const totalClassName = `result ${result === value["max"] ? "redResult" : "defResult"}`
+    const totalClassName = `result ${result === values.max ? "redResult" : "defResult"}`
 
     const renderScoreBoard = () => {
         if (error) {
             return <div className="error">{error}</div>
         }
-        if (warning) {
-            return <div className="warning">{warning}</div>
+        if (messageCounter) {
+            return <div className="warning">{messageCounter}</div>
         } else {
             return <div className={totalClassName}>{result}</div>
         }

@@ -3,26 +3,19 @@ export type ValuesType = {
     min: number,
 }
 
-type InitialStateType = {
-    values: ValuesType
-    valueMaxOfSettings: number
-    valueMinOfSettings: number
-    result: number
-    messageCounter: string | null
-    error: string | null
-}
-
 const initialState = {
     values: {
         max: 5,
         min: 0,
     },
-    valueMaxOfSettings: 0,
+    valueMaxOfSettings: 5,
     valueMinOfSettings: 0,
     result: 0,
-    messageCounter: null,
-    error: null,
+    messageCounter: null as null | string,
+    error: null as null | string,
 }
+
+export type InitialStateType = typeof initialState;
 
 export const counterReducer =
     (state = initialState, action: ActionType): InitialStateType => {
@@ -33,7 +26,6 @@ export const counterReducer =
             case "SET-VALUE":
             case "SET-VALUE-MAX-OF-SETTINGS":
             case "SET-VALUE-MIN-OF-SETTINGS":
-            case "SET-INITIAL-STATE":
                 return {...state, ...action.payload}
             default:
                 return state
@@ -70,23 +62,12 @@ type setValueAT = {
     payload: { values: ValuesType }
 }
 
-type setInitialStateAT = {
-    type: "SET-INITIAL-STATE",
-    payload: {
-        values: ValuesType
-        valueMaxOfSettings: number
-        valueMinOfSettings: number
-        result: number
-    }
-}
-
 export type ActionType = setMessageCounterAT
     | setErrorAT
     | setResultAT
     | setValueMaxOfSettingsAT
     | setValueMinOfSettingsAT
     | setValueAT
-    | setInitialStateAT
 
 export const setMessageCounterAC = (messageCounter: string | null): setMessageCounterAT => {
     return {
@@ -130,17 +111,6 @@ export const setValueAC = (values: ValuesType): setValueAT => {
     }
 }
 
-export const setInitialStateAC = (values: ValuesType, valueMaxOfSettings: number, valueMinOfSettings: number, result: number) => {
-    return {
-        type: "SET-INITIAL-STATE",
-        payload: {
-            values,
-            valueMaxOfSettings,
-            valueMinOfSettings,
-            result
-        }
-    }
-}
 
 
 

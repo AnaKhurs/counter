@@ -1,28 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {Dispatch, useEffect, useState} from 'react';
 import './App.css';
 import {SettingValue} from "./components/SettingValue/SettingValue";
 import {Counter} from "./components/Counter/Counter";
-import {useDispatch} from "react-redux";
-
-export type ValueType = {
-    [key: string]: number
-}
+import {useDispatch, useSelector} from "react-redux";
+import {
+    ActionType,
+    setResultAC,
+    setValueAC,
+    setValueMaxOfSettingsAC,
+    setValueMinOfSettingsAC, ValuesType
+} from "./redux/counter-reducer";
+import {AppRootStateType} from "./redux/store";
 
 function App() {
 
-    /*    const [messageCounter, setMessageCounter] = useState<string | null>(null)
-        const [error, setError] = useState<string | null>(null)
-        const [result, setResult] = useState<number>(0)
-        const [valueMaxOfSettings, setValueMaxOfSettings] = useState<number>(5)
-        const [valueMinOfSettings, setValueMinOfSettings] = useState<number>(0)
-        const [value, setValue] = useState<ValueType>(
-            {
-                ['max']: 5,
-                ['min']: 0
-            }
-        )*/
-
-    const dispatch = useDispatch()
+/*    const dispatch = useDispatch<Dispatch<ActionType>>()
+    const values = useSelector<AppRootStateType, ValuesType>(state => state.counter.values)
 
     useEffect(() => {
         const valueMax = localStorage.getItem("valueMaxOfSettings")
@@ -30,12 +23,12 @@ function App() {
         if (valueMin && valueMax) {
             const newValueMin = JSON.parse(valueMin)
             const newValueMax = JSON.parse(valueMax)
-            setValue({...value, ['max']: newValueMax, ['min']: newValueMin})
-            setResult(newValueMin)
-            setValueMinOfSettings(newValueMin)
-            setValueMaxOfSettings(newValueMax)
+            dispatch(setValueAC({...values, max: newValueMax, min: newValueMin}))
+            dispatch(setResultAC(newValueMin))
+            dispatch(setValueMinOfSettingsAC(newValueMin))
+            dispatch(setValueMaxOfSettingsAC(newValueMax))
         }
-    }, [])
+    }, [])*/
 
     return (
         <div className="App">
@@ -46,5 +39,3 @@ function App() {
 }
 
 export default App;
-
-

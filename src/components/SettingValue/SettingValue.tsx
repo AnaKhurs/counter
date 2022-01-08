@@ -2,7 +2,7 @@ import React, {ChangeEvent, Dispatch} from "react";
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    ActionType,
+    ActionType, InitialStateType,
     setErrorAC,
     setMessageCounterAC, setResultAC, setValueAC,
     setValueMaxOfSettingsAC,
@@ -19,7 +19,7 @@ export const SettingValue = () => {
         valueMaxOfSettings,
         values,
         error
-    } = useSelector<AppRootStateType>(state => state.counter)
+    } = useSelector<AppRootStateType, InitialStateType>(state => state.counter)
 
     const changeValueMax = (e: ChangeEvent<HTMLInputElement>) => {
         const newValueMax = Number(e.currentTarget.value)

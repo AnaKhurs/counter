@@ -1,7 +1,7 @@
 import React from "react";
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {ActionType, setResultAC, ValuesType} from "../../redux/counter-reducer";
+import {ActionType, InitialStateType, setResultAC, ValuesType} from "../../redux/counter-reducer";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../redux/store";
 
@@ -13,7 +13,7 @@ export const Counter = () => {
        result,
        messageCounter,
        error
-   } = useSelector<AppRootStateType>(state => state.counter)
+   } = useSelector<AppRootStateType, InitialStateType>(state => state.counter)
 
     const clickInc = () => {
         let total = result < values.max ? result + 1 : values.max;

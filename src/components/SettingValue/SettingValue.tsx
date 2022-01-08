@@ -61,8 +61,6 @@ export const SettingValue = () => {
         dispatch(setValueAC({max: valueMaxOfSettings, min: valueMinOfSettings}))
         dispatch(setResultAC(valueMinOfSettings))
         dispatch(setMessageCounterAC(null))
-        localStorage.setItem("valueMin", JSON.stringify(valueMinOfSettings))
-        localStorage.setItem("valueMax", JSON.stringify(valueMaxOfSettings))
     }
 
     const onOffDisableSet = () => {

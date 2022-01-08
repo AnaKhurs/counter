@@ -1,19 +1,19 @@
 import React from "react";
 import {Button} from "../Button/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {ActionType, InitialStateType, setResultAC, ValuesType} from "../../redux/counter-reducer";
+import {ActionType, InitialStateType, setResultAC} from "../../redux/counter-reducer";
 import {Dispatch} from "redux";
 import {AppRootStateType} from "../../redux/store";
 
 export const Counter = () => {
 
-   const dispatch = useDispatch<Dispatch<ActionType>>()
-   const {
-       values,
-       result,
-       messageCounter,
-       error
-   } = useSelector<AppRootStateType, InitialStateType>(state => state.counter)
+    const dispatch = useDispatch<Dispatch<ActionType>>()
+    const {
+        values,
+        result,
+        messageCounter,
+        error
+    } = useSelector<AppRootStateType, InitialStateType>(state => state.counter)
 
     const clickInc = () => {
         let total = result < values.max ? result + 1 : values.max;
@@ -45,11 +45,8 @@ export const Counter = () => {
     return (
         <div className="counter">
             <div className="scoreboard">
-
                 {renderScoreBoard()}
-
             </div>
-
             <div className="buttons">
                 <Button clickHandler={clickInc} onOffDisable={onOffDisableInc} name="inc" className="button-inc"/>
                 <Button clickHandler={clickReset} onOffDisable={onOffDisableReset} name="reset"
